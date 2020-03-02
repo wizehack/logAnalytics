@@ -1,0 +1,4 @@
+원인: 운영 publish로 설정하였음
+대책: QA2 서버로 설정
+개선 버전:  N/A
+http://hlm.lge.com/qi/browse/SWPRETEST-302

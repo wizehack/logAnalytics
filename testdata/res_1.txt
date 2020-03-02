@@ -1,0 +1,3 @@
+원인: china cp 설절 안됨
+대책: china cp를 wasu로 설정
+개선 버전:  N/A

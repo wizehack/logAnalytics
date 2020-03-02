@@ -1,0 +1,50 @@
+{
+    "OneShutRule" : [
+        {
+            "id" : "ssl",
+            "filter" : ["sdx.logging SDX", "message send failed: 35"],
+            "result" : "SSL Problem refer to https://hlm.lge.com/jirs-1234",
+            "outputType" : "TEXT"
+        },
+        {
+            "id" : "chinaCP",
+            "filter" : ["sdx.logging SDX", "countrycode2: CN"],
+            "result" : "/home/wizehack/devel/logtracker/testdata/res_1.txt",
+            "outputType" : "FILE"
+        },
+        {
+            "id" : "Production",
+            "filter" : ["sdx.logging SDX", "init_server_data index: 0"],
+            "result" : "production server",
+            "outputType" : "TEXT"
+        },
+        {
+            "id" : "Publish",
+            "filter" : ["sdx.logging SDX", "init_server_data isPublished: 1"],
+            "result" : "publish mode",
+            "outputType" : "TEXT"
+        },
+        {
+            "id" : "App_publish",
+            "filter" : ["sdx.logging SDX", "init_server_data isAppPublished: 1"],
+            "result" : "App publish mode",
+            "outputType" : "TEXT"
+        }
+    ],
+    "CompositeRule" : [
+        {
+            "id" : "production_publish_publish",
+            "condition" : "Production and Publish and App_publish",
+            "result" : "/home/wizehack/devel/logtracker/testdata/res_2.txt",
+            "ruleType" : "BOOLEANEXPR",
+            "outputType" : "FILE"
+        },
+        {
+            "id" : "sequencial_type",
+            "condition" : "",
+            "result" : "/home/wizehack/devel/logtracker/testdata/res_2.txt",
+            "ruleType" : "SEQUENCIAL",
+            "outputType" : "TEXT"
+        }
+    ]
+}

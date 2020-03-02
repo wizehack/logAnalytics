@@ -1,0 +1,7 @@
+{
+    "targets" : [
+        "/home/wizehack/devel/logtracker/testdata/log.1",
+        "/home/wizehack/devel/logtracker/testdata/log.2",
+        "/home/wizehack/devel/logtracker/testdata/log.3"
+    ]
+}

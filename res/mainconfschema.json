@@ -1,0 +1,70 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "OneShutRule": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "filter": {
+                        "type": "array",
+                        "items": [
+                            {"type": "string"}
+                        ]
+                    },
+                    "result": {
+                        "type": "string"
+                    },
+                    "outputType": {
+                        "enum": ["TEXT", "FILE"]
+                    }
+                },
+                "required": [
+                    "id",
+                    "filter",
+                    "result",
+                    "outputType"
+                ]
+            }
+                
+        },
+        "CompositeRule": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "condition": {
+                        "type": "string"
+                    },
+                    "result": {
+                        "type": "string"
+                    },
+                    "ruleType": {
+                        "enum": ["BOOLEANEXPR", "SEQUENCIAL"]
+                    },
+                    "outputType": {
+                        "enum": ["TEXT", "FILE"]
+                    }
+                },
+                "required": [
+                    "id",
+                    "condition",
+                    "result",
+                    "ruleType",
+                    "outputType"
+                ]
+            }
+        }
+    },
+    "required": [
+        "OneShutRule",
+        "CompositeRule"
+    ]
+}
