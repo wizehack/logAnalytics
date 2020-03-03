@@ -1,6 +1,5 @@
 import json
 from jsonschema import validate
-# from conf import Conf
 
 class ConfLoader:
 
@@ -13,19 +12,35 @@ class ConfLoader:
 		mainconfschema = None
 		logconfschema = None
 
-		with open(mainconfschemaPath) as mainConfSchema:
-			mainconfschema = json.load(mainConfSchema)
+		try:
+			with open(mainconfschemaPath) as mainConfSchema:
+				mainconfschema = json.load(mainConfSchema)
 
-		with open(logconfschemaPath) as logConfSchema:
-			logconfschema = json.load(logConfSchema)
+		except FileNotFoundError as e:
+			print(e)
 
-		with open(cPath) as mainConf:
-			self._mainConfJson = json.load(mainConf)
-			validate(instance=self._mainConfJson, schema=mainconfschema)
+		try:
+			with open(logconfschemaPath) as logConfSchema:
+				logconfschema = json.load(logConfSchema)
 
-		with open(lPath) as logConf:
-			self._logConfJson = json.load(logConf)
-			validate(instance=self._logConfJson, schema=logconfschema)
+		except FileNotFoundError as e:
+			print(e)
+
+		try:
+			with open(cPath) as mainConf:
+				self._mainConfJson = json.load(mainConf)
+				validate(instance=self._mainConfJson, schema=mainconfschema)
+
+		except FileNotFoundError as e:
+			print(e)
+
+		try:
+			with open(lPath) as logConf:
+				self._logConfJson = json.load(logConf)
+				validate(instance=self._logConfJson, schema=logconfschema)
+
+		except FileNotFoundError as e:
+			print(e)
 
 
 	def getTargetPathList(self):

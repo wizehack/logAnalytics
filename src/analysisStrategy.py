@@ -22,7 +22,6 @@ class RuleBasedStrategy(AnalysisStrategy):
 		self._confLoader = conf
 
 	def perform(self, logPathList: list) -> Result:
-		print(logPathList)
 		oneshutRes = []
 		# print('========= Oneshut Analysis ============')
 		for n in range(len(logPathList)):
@@ -40,7 +39,6 @@ class RuleBasedStrategy(AnalysisStrategy):
 							log.append( (rule['id'], line, rule['result'], rule['outputType']) )
 			except FileNotFoundError as e:
 				print(e)
-				pass
 
 			if len(log) > 1:
 				oneshutRes.append(log)

@@ -28,10 +28,13 @@ class ResultHandler(Handler):
 		return 'OK bye`~~'
 
 	def printFile(self, path: str):
-		with open(path, 'r') as file:
-			for line in file:
-				print(line)
+		try:
+			with open(path, 'r') as file:
+				for line in file:
+					print(line)
 
+		except FileNotFoundError as e:
+			print(e)
 
 
 class OneshutFileResultHandler(ResultHandler):
