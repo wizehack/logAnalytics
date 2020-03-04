@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from confLoader import ConfLoader
 from result import Result
 import re
+import codecs
 #from logHandle import LogHandle
 
 class AnalysisStrategy(ABC):
@@ -30,15 +31,19 @@ class RuleBasedStrategy(AnalysisStrategy):
 
 			log = [filename,]
 			try:
-				with open(filename, 'r') as file:
+				with codecs.open(filename, 'r', encoding='utf-8', errors='ignore') as fdata:
 					# print('========= check: ', filename)
-					for line in file:
-						rule = self.checkByOneshutRule(line)
-						if rule:
-							# print('======== catched: ', (rule['id'], line, rule['result'], rule['outputType']))
-							log.append( (rule['id'], line, rule['result'], rule['outputType']) )
-			except FileNotFoundError as e:
-				print(e)
+					try:
+						for line in fdata:
+							rule = self.checkByOneshutRule(line)
+							if rule:
+								# print('======== catched: ', (rule['id'], line, rule['result'], rule['outputType']))
+								log.append( (rule['id'], line, rule['result'], rule['outputType']) )
+					except UnicodeDecodeError as e2:
+						print(filename, line, e2)
+
+			except FileNotFoundError as e1:
+				print(e1)
 
 			if len(log) > 1:
 				oneshutRes.append(log)
@@ -61,11 +66,12 @@ class RuleBasedStrategy(AnalysisStrategy):
 			bFound = True
 			for i in range(len(filters)):
 				regexpr = filters[i]
-				# print('========= regexpr: ', regexpr)
+				#print('========= regexpr: ', regexpr)
 				p = re.compile(regexpr)
 				matchObj = p.search(line)
 
 				if matchObj != None:
+					# print('========= regexpr: ', regexpr, line)
 					value = matchObj.group()
 					if value:
 						# print('======= matched: ', value)
