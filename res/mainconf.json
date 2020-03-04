@@ -9,7 +9,7 @@
         {
             "id" : "chinaCP",
             "filter" : ["sdx.logging SDX", "countrycode2: CN"],
-            "result" : "/home/wizehack/devel/logtracker/testdata/res_1.txt",
+            "result" : "testdata/res_1.txt",
             "outputType" : "FILE"
         },
         {
@@ -35,14 +35,14 @@
         {
             "id" : "production_publish_publish",
             "condition" : "Production and Publish and App_publish",
-            "result" : "/home/wizehack/devel/logtracker/testdata/res_2.txt",
+            "result" : "testdata/res_2.txt",
             "ruleType" : "BOOLEANEXPR",
             "outputType" : "FILE"
         },
         {
             "id" : "sequencial_type",
             "condition" : "",
-            "result" : "/home/wizehack/devel/logtracker/testdata/res_2.txt",
+            "result" : "testdata/res_2.txt",
             "ruleType" : "SEQUENCIAL",
             "outputType" : "TEXT"
         }

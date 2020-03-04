@@ -89,18 +89,18 @@ class CompositeFileResultHandler(ResultHandler):
 		print('==== Applying Composite Rule by FILE type ====')
 		compositeResults = res.getCompositeResults()
 
-		for item in compositeResults:
+		if compositeResults:
+			for item in compositeResults:
+				if(item['outputType'] == 'FILE'):
+					print('ID : ', item['id'])
+					print('Rule type: ', item['ruleType'])
 
-			if(item['outputType'] == 'FILE'):
-				print('ID : ', item['id'])
-				print('Rule type: ', item['ruleType'])
+					if item['ruleType'] == 'BOOLEANEXPR':
+						print('Condition: ', item['condition'])
 
-				if item['ruleType'] == 'BOOLEANEXPR':
-					print('Condition: ', item['condition'])
-
-				print('Result')
-				super().printFile(item['result'])
-				print('\n\n')
+						print('Result')
+						super().printFile(item['result'])
+						print('\n\n')
 
 		return super().show(res)
 
@@ -111,17 +111,17 @@ class CompositeTextResultHandler(ResultHandler):
 		print('==== Applying Composite Rule by TEXT type ====')
 		compositeResults = res.getCompositeResults()
 
-		for item in compositeResults:
+		if compositeResults:
+			for item in compositeResults:
+				if(item['outputType'] == 'TEXT'):
+					print('ID : ', item['id'])
+					print('Rule type: ', item['ruleType'])
 
-			if(item['outputType'] == 'TEXT'):
-				print('ID : ', item['id'])
-				print('Rule type: ', item['ruleType'])
+					if item['ruleType'] == 'BOOLEANEXPR':
+						print('Condition: ', item['condition'])
 
-				if item['ruleType'] == 'BOOLEANEXPR':
-					print('Condition: ', item['condition'])
-
-				print('Result')
-				print(item['result'])
-				print('\n\n')
+					print('Result')
+					print(item['result'])
+					print('\n\n')
 
 		return super().show(res)
