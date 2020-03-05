@@ -39,6 +39,8 @@ class ResultHandler(Handler):
 
 class OneshutFileResultHandler(ResultHandler):
 
+	_displayedRule = []
+
 	def show(self, res: Result) -> str:
 		print('==== Applying Oneshut Rule by FILE type ====')
 		oneshutResults = res.getOneShutResults()
@@ -49,18 +51,24 @@ class OneshutFileResultHandler(ResultHandler):
 
 			for d in results:
 				if d[3] == 'FILE':
-					print('Log File: ', filename)
-					print('Rule ID: ', d[0])
-					print('Log Line: ')
-					print(d[1])
-					print('Analysis Result')
-					super().printFile(d[2])
-					print('\n\n')
+					if d[0] in self._displayedRule:
+						print(d[0], d[1])
+					else:
+						self._displayedRule.append(d[0])
+						print('Log File: ', filename)
+						print('Rule ID: ', d[0])
+						print('Log Line: ')
+						print(d[1])
+						print('Analysis Result')
+						super().printFile(d[2])
+						print('\n\n')
 
 		return super().show(res)
 
 
 class OneshutTextResultHandler(ResultHandler):
+
+	_displayedRule = []
 
 	def show(self, res: Result) -> str:
 		print('==== Applying Oneshut Rule by TEXT type ====')
@@ -72,13 +80,17 @@ class OneshutTextResultHandler(ResultHandler):
 
 			for d in results:
 				if d[3] == 'TEXT':
-					print('Log File: ', filename)
-					print('Rule ID: ', d[0])
-					print('Log Line: ')
-					print(d[1])
-					print('Analysis Result')
-					print(d[2])
-					print('\n\n')
+					if d[0] in self._displayedRule:
+						print(d[0], d[1])
+					else:
+						self._displayedRule.append(d[0])
+						print('Log File: ', filename)
+						print('Rule ID: ', d[0])
+						print('Log Line: ')
+						print(d[1])
+						print('Analysis Result')
+						print(d[2])
+						print('\n\n')
 
 		return super().show(res)
 
