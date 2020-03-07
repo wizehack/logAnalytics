@@ -50,6 +50,13 @@ class OneshutFileResultHandler(ResultHandler):
 			results = item[1:]
 
 			for d in results:
+				displayType = res.getConfLoader().getDisplayLogType()
+				# print('========displayType: ', displayType)
+
+				if displayType is not None:
+					if displayType != d[4]:
+						continue
+
 				if d[3] == 'FILE':
 					if d[0] in self._displayedRule:
 						print(d[0], d[1])
@@ -79,6 +86,12 @@ class OneshutTextResultHandler(ResultHandler):
 			results = item[1:]
 
 			for d in results:
+				displayType = res.getConfLoader().getDisplayLogType()
+
+				if displayType is not None:
+					if displayType != d[4]:
+						continue
+
 				if d[3] == 'TEXT':
 					if d[0] in self._displayedRule:
 						print(d[0], d[1])
@@ -103,12 +116,20 @@ class CompositeFileResultHandler(ResultHandler):
 
 		if compositeResults:
 			for item in compositeResults:
+				displayType = res.getConfLoader().getDisplayLogType()
+
+				if displayType is not None:
+					if displayType != item['logType']:
+						continue
+
 				if(item['outputType'] == 'FILE'):
 					print('ID : ', item['id'])
 					print('Rule type: ', item['ruleType'])
 
 					if item['ruleType'] == 'BOOLEANEXPR':
 						print('Condition: ', item['condition'])
+					elif item['ruleType'] == 'SEQUENTIAL':
+						print('order: ', item['order'])
 
 						print('Result')
 						super().printFile(item['result'])
@@ -122,15 +143,25 @@ class CompositeTextResultHandler(ResultHandler):
 	def show(self, res: Result) -> str:
 		print('==== Applying Composite Rule by TEXT type ====')
 		compositeResults = res.getCompositeResults()
+		# print(compositeResults)
 
 		if compositeResults:
 			for item in compositeResults:
+				displayType = res.getConfLoader().getDisplayLogType()
+
+				if displayType is not None:
+					if displayType != item['logType']:
+						continue
+
 				if(item['outputType'] == 'TEXT'):
 					print('ID : ', item['id'])
 					print('Rule type: ', item['ruleType'])
 
 					if item['ruleType'] == 'BOOLEANEXPR':
 						print('Condition: ', item['condition'])
+					elif item['ruleType'] == 'SEQUENTIAL':
+						print('order: ', item['order'])
+					print('logTpye', item['logType'])
 
 					print('Result')
 					print(item['result'])

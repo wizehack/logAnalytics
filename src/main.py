@@ -11,11 +11,12 @@ from conf import Conf
 def checkOption(argv):
 	logconf = ''
 	mainconf = ''
+	logType= None
 
 	try:
-		opts, args = getopt.getopt(argv,"hl:c:",["lfile=","cfile="])
+		opts, args = getopt.getopt(argv,"hl:c:f:",["lfile=","cfile=", "logType="])
 	except getopt.GetoptError:
-		print ('error: python main.py -l <logconf.json> -c <mainconf.json>')
+		print ('error: python main.py -l <logconf.json> -c <mainconf.json> -f <NORMAL, FAULT>')
 		sys.exit(2)
 
 	for opt, arg in opts:
@@ -26,10 +27,17 @@ def checkOption(argv):
 			logconf = arg
 		elif opt in ("-c", "--cfile"):
 			mainconf = arg
+		elif opt in ("-f", "--logType"):
+			logType = arg
 	print ('log conf file is ', logconf)
 	print ('main conf file is ', mainconf)
+	print ('logType is  ', logType)
 
 	conf = Conf(logconf, mainconf)
+
+	if logType:
+		conf.setDisplyLogType(logType)
+
 	return conf
 
 
@@ -50,3 +58,4 @@ if __name__ == "__main__":
 	result = analyzer.execute()
 
 	print(oneshutFileHandler.show(result))
+

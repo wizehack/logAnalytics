@@ -38,7 +38,7 @@ class RuleBasedStrategy(AnalysisStrategy):
 							rule = self.checkByOneshutRule(line)
 							if rule:
 								# print('======== catched: ', (rule['id'], line, rule['result'], rule['outputType']))
-								log.append( (rule['id'], line, rule['result'], rule['outputType']) )
+								log.append( (rule['id'], line, rule['result'], rule['outputType'], rule['logType']) )
 					except UnicodeDecodeError as e2:
 						print(filename, line, e2)
 
@@ -51,7 +51,7 @@ class RuleBasedStrategy(AnalysisStrategy):
 		# print('========= Composite Analysis ============')
 		compositeRes = self.checkByCompositRule(oneshutRes)
 		# print(logs)
-		res = Result()
+		res = Result(self._confLoader)
 		res.setOneShutResults(oneshutRes)
 		res.setCompositeResults(compositeRes)
 
@@ -97,7 +97,7 @@ class RuleBasedStrategy(AnalysisStrategy):
 			if ruleType == 'BOOLEANEXPR':
 				if self.isMatchedByBooleanExpr(rule, oneshutRes):
 					compositeRes.append(rule)
-			elif ruleType == 'SEQUENCIAL':
+			elif ruleType == 'SEQUENTIAL':
 				# print("======= rule: ", rule)
 				if self.isMatchedByOrder(rule, oneshutRes):
 					compositeRes.append(rule)

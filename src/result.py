@@ -1,5 +1,8 @@
 class Result():
 
+	def __init__(self, confLoader):
+		self._confLoader = confLoader
+
 	def setOneShutResults(self, oneshutResults):
 		self._oneshutResults = oneshutResults
 
@@ -11,3 +14,6 @@ class Result():
 
 	def getCompositeResults(self):
 		return self._compositeResults
+
+	def getConfLoader(self): # confLoader
+		return self._confLoader

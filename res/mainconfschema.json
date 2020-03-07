@@ -29,6 +29,7 @@
                 "required": [
                     "id",
                     "filter",
+                    "logType",
                     "result",
                     "outputType"
                 ]
@@ -59,7 +60,7 @@
                         "type": "string"
                     },
                     "ruleType": {
-                        "enum": ["BOOLEANEXPR", "SEQUENCIAL"]
+                        "enum": ["BOOLEANEXPR", "SEQUENTIAL"]
                     },
                     "outputType": {
                         "enum": ["TEXT", "FILE"]
@@ -68,6 +69,7 @@
                 "required": [
                     "id",
                     "result",
+                    "logType",
                     "ruleType",
                     "outputType"
                 ]

@@ -4,8 +4,8 @@ from jsonschema import validate
 class ConfLoader:
 
 	def __init__(self, c):
-		cPath = c.getMainConfPath()
-		lPath = c.getLogConfPath()
+		self._conf = c
+
 		mainconfschemaPath = './res/mainconfschema.json'
 		logconfschemaPath = './res/logconfschema.json'
 
@@ -27,7 +27,7 @@ class ConfLoader:
 			print(e)
 
 		try:
-			with open(cPath) as mainConf:
+			with open(self._conf.getMainConfPath()) as mainConf:
 				self._mainConfJson = json.load(mainConf)
 				validate(instance=self._mainConfJson, schema=mainconfschema)
 
@@ -35,12 +35,13 @@ class ConfLoader:
 			print(e)
 
 		try:
-			with open(lPath) as logConf:
+			with open(self._conf.getLogConfPath()) as logConf:
 				self._logConfJson = json.load(logConf)
 				validate(instance=self._logConfJson, schema=logconfschema)
 
 		except FileNotFoundError as e:
 			print(e)
+
 
 
 	def getTargetPathList(self):
@@ -54,3 +55,5 @@ class ConfLoader:
 	def getCompositRule(self):
 		return self._mainConfJson['CompositeRule']
 
+	def getDisplayLogType(self):
+		return self._conf.getDisplayLogType()
