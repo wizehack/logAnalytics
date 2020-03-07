@@ -95,10 +95,12 @@ class RuleBasedStrategy(AnalysisStrategy):
 		for rule in rules:
 			ruleType = rule['ruleType']
 			if ruleType == 'BOOLEANEXPR':
-				if self.checkBooleanExpr(rule, oneshutRes):
+				if self.isMatchedByBooleanExpr(rule, oneshutRes):
 					compositeRes.append(rule)
 			elif ruleType == 'SEQUENCIAL':
-				pass
+				# print("======= rule: ", rule)
+				if self.isMatchedByOrder(rule, oneshutRes):
+					compositeRes.append(rule)
 			else:
 				print('Not support composite rule type, please check your conf file')
 
@@ -109,13 +111,13 @@ class RuleBasedStrategy(AnalysisStrategy):
 			return None
 
 
-	def checkBooleanExpr(self, rule, oneshutRes):
+	def isMatchedByBooleanExpr(self, rule, oneshutRes):
 		# print('======== oneshutRes: ', oneshutRes)
 		# print('======== compositRule: ', rule)
 
 		oneshutResultList = []
 		for d in oneshutRes:
-			oneshutResultList = oneshutResultList + d[1:]
+			oneshutResultList = oneshutResultList + d[1:] # remove filepath
 
 		oneshutRules = self._confLoader.getOneShutRule();
 		oneshutIdTuple = tuple(oneshut['id'] for oneshut in oneshutRules)
@@ -134,4 +136,40 @@ class RuleBasedStrategy(AnalysisStrategy):
 
 		# print('========== condition: ', conditionStr)
 		return eval(conditionStr)
+
+	def isMatchedByOrder(self, rule, oneshutRes):
+		oneshutResultList = []
+		for d in oneshutRes:
+			oneshutResultList = oneshutResultList + d[1:] # remove filepath
+
+		oneshutRules = self._confLoader.getOneShutRule();
+		oneshutIdTuple = tuple(oneshut['id'] for oneshut in oneshutRules)
+		oneshutResultIdTuple = tuple (item[0] for item in oneshutResultList)
+
+		orderCond = rule['order']
+
+		maxnum = -1
+		for d in orderCond:
+			num = self.getSequenceNum(d, oneshutIdTuple)
+			# print("======= order num: ", num)
+
+			if num > len(oneshutIdTuple):
+				return False
+
+			if num > maxnum:
+				num = maxnum
+			else:
+				return False
+
+		return True
+
+
+	def getSequenceNum(self, item, oneshutIdTuple):
+		# print("======= ", item)
+
+		for n in range(len(oneshutIdTuple)):
+			if item == oneshutIdTuple[n]:
+				return n
+
+		return len(oneshutIdTuple) + 1
 

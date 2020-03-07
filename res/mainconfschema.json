@@ -16,6 +16,9 @@
                             {"type": "string"}
                         ]
                     },
+                    "logType": {
+                        "enum": ["FAULT", "NORMAL"]
+                    },
                     "result": {
                         "type": "string"
                     },
@@ -43,6 +46,15 @@
                     "condition": {
                         "type": "string"
                     },
+                    "order": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "logType": {
+                        "enum": ["FAULT", "NORMAL"]
+                    },
                     "result": {
                         "type": "string"
                     },
@@ -55,7 +67,6 @@
                 },
                 "required": [
                     "id",
-                    "condition",
                     "result",
                     "ruleType",
                     "outputType"
