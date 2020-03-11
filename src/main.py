@@ -1,22 +1,24 @@
 import sys, getopt
-from analysisStrategy import RuleBasedStrategy
-from logAnalyzer import LogAnalyzer
+from ruleBasedStrategy import RuleBasedStrategy
+from faultConditionBasedDetectionStrategy import FaultConditionBasedDetectionStrategy
+from normalConditionBasedDetectionStrategy import NormalConditionBasedDetectionStrategy
+from analyzer import LogAnalyzer
+from analyzer import FaultDetector
 from confLoader import ConfLoader
-from resultHandler import OneshutFileResultHandler
-from resultHandler import OneshutTextResultHandler
-from resultHandler import CompositeFileResultHandler
-from resultHandler import CompositeTextResultHandler
+from resultHandler import OneshutResultHandler
+from resultHandler import CompositeResultHandler
+from oneshutViolatedRuleHandler import OneshutViolatedRuleHandler
+from compositeViolatedRuleHandler import CompositeViolatedRuleHandler
 from conf import Conf
 
 def checkOption(argv):
 	logconf = ''
 	mainconf = ''
-	logType= None
 
 	try:
-		opts, args = getopt.getopt(argv,"hl:c:f:",["lfile=","cfile=", "logType="])
+		opts, args = getopt.getopt(argv,"hl:c:",["lfile=","cfile="])
 	except getopt.GetoptError:
-		print ('error: python main.py -l <logconf.json> -c <mainconf.json> -f <NORMAL, FAULT>')
+		print ('error: python main.py -l <logconf.json> -c <mainconf.json>')
 		sys.exit(2)
 
 	for opt, arg in opts:
@@ -27,16 +29,10 @@ def checkOption(argv):
 			logconf = arg
 		elif opt in ("-c", "--cfile"):
 			mainconf = arg
-		elif opt in ("-f", "--logType"):
-			logType = arg
 	print ('log conf file is ', logconf)
 	print ('main conf file is ', mainconf)
-	print ('logType is  ', logType)
 
 	conf = Conf(logconf, mainconf)
-
-	if logType:
-		conf.setDisplyLogType(logType)
 
 	return conf
 
@@ -44,18 +40,25 @@ def checkOption(argv):
 if __name__ == "__main__":
 
 	#setup chain of responsibility
-	oneshutFileHandler = OneshutFileResultHandler()
-	oneshutTextHandler = OneshutTextResultHandler()
-	compositeFileHandler = CompositeFileResultHandler()
-	compositeTextHandler = CompositeTextResultHandler()
-	oneshutFileHandler.setNext(oneshutTextHandler).setNext(compositeFileHandler).setNext(compositeTextHandler)
+	oneshutResultHandler = OneshutResultHandler()
+	compositeResultHandler = CompositeResultHandler()
+	oneshutViolatedRuleHandler = OneshutViolatedRuleHandler()
+	compositeViolatedRuleHandler = CompositeViolatedRuleHandler()
+
+	handler = oneshutResultHandler.setNext(compositeResultHandler)
+	handler = handler.setNext(oneshutViolatedRuleHandler)
+	handler = handler.setNext(compositeViolatedRuleHandler)
 
 	confTemp = checkOption(sys.argv[1:])
 	cLoader = ConfLoader(confTemp)
-	logPathList = cLoader.getTargetPathList()
 
-	analyzer = LogAnalyzer(logPathList, RuleBasedStrategy(cLoader))
-	result = analyzer.execute()
+	logAnalyzer = LogAnalyzer(RuleBasedStrategy(cLoader))
+	result = logAnalyzer.execute()
 
-	print(oneshutFileHandler.show(result))
+	faultDetector = FaultDetector(result, FaultConditionBasedDetectionStrategy(cLoader))
+	result = faultDetector.execute()
+
+	faultDetector = FaultDetector(result, NormalConditionBasedDetectionStrategy(cLoader))
+	result = faultDetector.execute()
+	print(oneshutResultHandler.show(result))
 

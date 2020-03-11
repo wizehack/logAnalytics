@@ -37,64 +37,25 @@ class ResultHandler(Handler):
 			print(e)
 
 
-class OneshutFileResultHandler(ResultHandler):
+class OneshutResultHandler(ResultHandler):
 
 	_displayedRule = []
 
 	def show(self, res: Result) -> str:
-		print('==== Applying Oneshut Rule by FILE type ====')
+		print('==== matched log by Oneshut Rule ====')
 		oneshutResults = res.getOneShutResults()
 
 		for item in oneshutResults:
 			filename = item[0]
 			results = item[1:]
+			# print(results)
 
 			for d in results:
-				displayType = res.getConfLoader().getDisplayLogType()
-				# print('========displayType: ', displayType)
-
-				if displayType is not None:
-					if displayType != d[4]:
-						continue
-
-				if d[3] == 'FILE':
-					if d[0] in self._displayedRule:
-						print(d[0], d[1])
-					else:
-						self._displayedRule.append(d[0])
-						print('Log File: ', filename)
-						print('Rule ID: ', d[0])
-						print('Log Line: ')
-						print(d[1])
-						print('Analysis Result')
-						super().printFile(d[2])
-						print('\n\n')
-
-		return super().show(res)
-
-
-class OneshutTextResultHandler(ResultHandler):
-
-	_displayedRule = []
-
-	def show(self, res: Result) -> str:
-		print('==== Applying Oneshut Rule by TEXT type ====')
-		oneshutResults = res.getOneShutResults()
-
-		for item in oneshutResults:
-			filename = item[0]
-			results = item[1:]
-
-			for d in results:
-				displayType = res.getConfLoader().getDisplayLogType()
-
-				if displayType is not None:
-					if displayType != d[4]:
-						continue
 
 				if d[3] == 'TEXT':
 					if d[0] in self._displayedRule:
-						print(d[0], d[1])
+						continue
+						#print(d[0], d[1])
 					else:
 						self._displayedRule.append(d[0])
 						print('Log File: ', filename)
@@ -105,24 +66,34 @@ class OneshutTextResultHandler(ResultHandler):
 						print(d[2])
 						print('\n\n')
 
+				elif d[3] == 'FILE':
+					if d[0] in self._displayedRule:
+						continue
+						#print(d[0], d[1])
+					else:
+						self._displayedRule.append(d[0])
+						print('Log File: ', filename)
+						print('Rule ID: ', d[0])
+						print('Log Line: ')
+						print(d[1])
+						print('Analysis Result')
+						super().printFile(d[2])
+						print('\n\n')
+
+
 		return super().show(res)
 
 
-class CompositeFileResultHandler(ResultHandler):
+class CompositeResultHandler(ResultHandler):
 
 	def show(self, res: Result) -> str:
-		print('==== Applying Composite Rule by FILE type ====')
+		print('==== matched log by composite Rule ====')
 		compositeResults = res.getCompositeResults()
 
 		if compositeResults:
 			for item in compositeResults:
-				displayType = res.getConfLoader().getDisplayLogType()
 
-				if displayType is not None:
-					if displayType != item['logType']:
-						continue
-
-				if(item['outputType'] == 'FILE'):
+				if item['outputType'] == 'FILE':
 					print('ID : ', item['id'])
 					print('Rule type: ', item['ruleType'])
 
@@ -132,28 +103,9 @@ class CompositeFileResultHandler(ResultHandler):
 						print('order: ', item['order'])
 
 						print('Result')
-						super().printFile(item['result'])
-						print('\n\n')
+					super().printFile(item['result'])
 
-		return super().show(res)
-
-
-class CompositeTextResultHandler(ResultHandler):
-
-	def show(self, res: Result) -> str:
-		print('==== Applying Composite Rule by TEXT type ====')
-		compositeResults = res.getCompositeResults()
-		# print(compositeResults)
-
-		if compositeResults:
-			for item in compositeResults:
-				displayType = res.getConfLoader().getDisplayLogType()
-
-				if displayType is not None:
-					if displayType != item['logType']:
-						continue
-
-				if(item['outputType'] == 'TEXT'):
+				elif item['outputType'] == 'TEXT':
 					print('ID : ', item['id'])
 					print('Rule type: ', item['ruleType'])
 
@@ -165,6 +117,6 @@ class CompositeTextResultHandler(ResultHandler):
 
 					print('Result')
 					print(item['result'])
-					print('\n\n')
+		print('\n\n')
 
 		return super().show(res)

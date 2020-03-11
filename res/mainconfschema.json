@@ -23,7 +23,7 @@
                         "type": "string"
                     },
                     "outputType": {
-                        "enum": ["TEXT", "FILE"]
+                        "enum": ["TEXT", "FILE", "NONE"]
                     }
                 },
                 "required": [
@@ -63,7 +63,7 @@
                         "enum": ["BOOLEANEXPR", "SEQUENTIAL"]
                     },
                     "outputType": {
-                        "enum": ["TEXT", "FILE"]
+                        "enum": ["TEXT", "FILE", "NONE"]
                     }
                 },
                 "required": [

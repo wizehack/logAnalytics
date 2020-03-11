@@ -52,8 +52,10 @@ class ConfLoader:
 		return self._mainConfJson['OneShutRule']
 
 
-	def getCompositRule(self):
+	def getCompositeRule(self):
 		return self._mainConfJson['CompositeRule']
 
+'''
 	def getDisplayLogType(self):
 		return self._conf.getDisplayLogType()
+	'''

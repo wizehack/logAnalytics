@@ -9,11 +9,35 @@ class Result():
 	def setCompositeResults(self, compositeResults):
 		self._compositeResults = compositeResults
 
+	def setOneshutFaultList(self, faultList):
+		self._oneshutFaultList = faultList
+
+	def setCompositeFaultList(self, faultList):
+		self._compositeFaultList = faultList
+
+	# def setOneshutViolatedRule(self, rule):
+	# 	self._oneShutViolatedRule = rule
+
+	def setCompositeViolatedRule(self, rule):
+		self._compositeViolatedRule = rule
+
 	def getOneShutResults(self):
 		return self._oneshutResults
 
 	def getCompositeResults(self):
 		return self._compositeResults
+
+	def getOneshutFaultList(self):
+		return self._oneshutFaultList
+
+	def getCompositeFaultList(self):
+		return self._compositeFaultList
+
+	# def getOneshutViolatedRule(self):
+	# 	return self._oneShutViolatedRule
+
+	def getCompositeViolatedRule(self):
+		return self._compositeViolatedRule
 
 	def getConfLoader(self): # confLoader
 		return self._confLoader
