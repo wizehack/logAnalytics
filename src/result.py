@@ -2,6 +2,11 @@ class Result():
 
 	def __init__(self, confLoader):
 		self._confLoader = confLoader
+		self._oneshutResults = None
+		self._compositeResults = None
+		self._oneshutFaultList = None
+		self._compositeFaultList = None
+		self._compositeViolatedRule = None
 
 	def setOneShutResults(self, oneshutResults):
 		self._oneshutResults = oneshutResults

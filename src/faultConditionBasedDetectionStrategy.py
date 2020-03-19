@@ -16,7 +16,6 @@ class FaultConditionBasedDetectionStrategy(AnalysisStrategy):
 		compositeFaultList = []
 
 		oneshutResults = result.getOneShutResults()
-		compositeResults = result.getCompositeResults();
 
 		for item in oneshutResults:
 			# print(item)
@@ -27,11 +26,14 @@ class FaultConditionBasedDetectionStrategy(AnalysisStrategy):
 
 		result.setOneshutFaultList(oneshutFaultList)
 
-		for item in compositeResults:
-			if item['logType'] == 'FAULT':
-				compositeFaultList.append(item)
+		compositeResults = result.getCompositeResults();
 
-		result.setCompositeFaultList(compositeFaultList)
+		if compositeResults:
+			for item in compositeResults:
+				if item['logType'] == 'FAULT':
+					compositeFaultList.append(item)
+
+			result.setCompositeFaultList(compositeFaultList)
 
 		# print('composit: ', compositeFaultList)
 		return result

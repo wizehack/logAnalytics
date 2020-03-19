@@ -50,22 +50,26 @@ class NormalConditionBasedDetectionStrategy(AnalysisStrategy):
 		compositeNormalTypeList = []
 		detectedRule = []
 
+		confLoader = result.getConfLoader()
+
 		compositeResults = result.getCompositeResults();
 		# print('==== compositeResults:', compositeResults)
-		confLoader = result.getConfLoader()
+
+		if compositeResults:
+			for item in compositeResults:
+				if item['logType'] == 'NORMAL':
+					compositeNormalTypeList.append(item)
+
+		if compositeNormalTypeList:
+			normalIdTuple = tuple(item['id'] for item in compositeNormalTypeList)
 
 		compositeRule = self._confLoader.getCompositeRule()
 		# print(compositeRule)
 
-		for item in compositeResults:
-			if item['logType'] == 'NORMAL':
-				compositeNormalTypeList.append(item)
-
-		normalIdTuple = tuple(item['id'] for item in compositeNormalTypeList)
-
-		for item in compositeRule:
-			if item['logType'] == 'NORMAL':
-				if not item['id'] in normalIdTuple:
-					detectedRule.append(item)
+		if compositeRule:
+			for item in compositeRule:
+				if item['logType'] == 'NORMAL':
+					if not item['id'] in normalIdTuple:
+						detectedRule.append(item)
 
 		return detectedRule
