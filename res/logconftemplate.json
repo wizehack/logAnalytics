@@ -1,0 +1,28 @@
+{
+    "path" : [
+        "tmp/var/log/messages",
+        "tmp/var/log/messages.0",
+        "tmp/var/log/messages.1",
+        "tmp/var/log/messages.2",
+        "tmp/var/log/messages.3",
+        "tmp/var/log/messages.4",
+        "tmp/var/log/legacy-log",
+        "tmp/var/log/legacy-log.0",
+        "tmp/var/log/legacy-log.1",
+        "tmp/var/log/legacy-log.2",
+        "tmp/var/log/legacy-log.3",
+        "tmp/var/log/legacy-log.4",
+        "log/messages",
+        "log/messages.0",
+        "log/messages.1",
+        "log/messages.2",
+        "log/messages.3",
+        "log/messages.4",
+        "log/legacy-log",
+        "log/legacy-log.0",
+        "log/legacy-log.1",
+        "log/legacy-log.2",
+        "log/legacy-log.3",
+        "log/legacy-log.4"
+        ]
+}
