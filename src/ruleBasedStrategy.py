@@ -138,8 +138,7 @@ class RuleBasedStrategy(AnalysisStrategy):
 					break
 				else:
 					boolValue = 'False'
-
-			conditionStr = conditionStr.replace(oneshutId, boolValue)
+				conditionStr = conditionStr.replace(oneshutId, boolValue)
 
 		# print('========== eval: ', conditionStr)
 		try:

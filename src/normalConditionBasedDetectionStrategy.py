@@ -49,6 +49,7 @@ class NormalConditionBasedDetectionStrategy(AnalysisStrategy):
 	def detectViolatedCompositeRule(self, result:Result) -> list:
 		compositeNormalTypeList = []
 		detectedRule = []
+		normalIdTuple = None
 
 		confLoader = result.getConfLoader()
 
@@ -69,7 +70,8 @@ class NormalConditionBasedDetectionStrategy(AnalysisStrategy):
 		if compositeRule:
 			for item in compositeRule:
 				if item['logType'] == 'NORMAL':
-					if not item['id'] in normalIdTuple:
-						detectedRule.append(item)
+					if normalIdTuple:
+						if not item['id'] in normalIdTuple:
+							detectedRule.append(item)
 
 		return detectedRule

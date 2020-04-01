@@ -35,6 +35,7 @@ class ConfLoader:
 			print(e)
 
 		try:
+			print("confPath: ", self._conf.getLogConfPath())
 			with open(self._conf.getLogConfPath()) as logConf:
 				self._logConfJson = json.load(logConf)
 				validate(instance=self._logConfJson, schema=logconfschema)
@@ -45,6 +46,7 @@ class ConfLoader:
 
 
 	def getTargetPathList(self):
+		print(" getTargetPathList:", self._logConfJson)
 		return self._logConfJson['targets']
 
 

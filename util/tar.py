@@ -6,6 +6,7 @@ class Tar:
 		self._destdir = destdir
 
 	def zxvf(self):
+		print("extract: ", self._srcfile)
 		ap = tarfile.open(self._srcfile)
 		ap.extractall(self._destdir)
 		ap.close()

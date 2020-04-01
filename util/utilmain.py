@@ -13,7 +13,7 @@ def printGuide():
 
 
 def uncompress(srcfile, destpath):
-	tar = Tar(sourcefile, sourcedir)
+	tar = Tar(srcfile, destpath)
 
 	if tar.zxvf() == False:
 		print("Error: Can not uncompress downloaded file")
@@ -123,6 +123,7 @@ if __name__ == "__main__":
 		if sourcedir is not None:
 			dwnfilename = downloadurl.split('/')[-1]
 			sourcefile = sourcedir + '/' + dwnfilename
+			destdir = sourcedir
 
 			dwnldr = HttpDwnldr(downloadurl, sourcefile)
 
@@ -130,7 +131,7 @@ if __name__ == "__main__":
 				print("Error: download failed")
 				sys.exit(-1)
 
-			uncompress(compressedfile, destdir)
+			uncompress(sourcefile, destdir)
 			# tarList = getAllFileList(destdir, '.tar.gz')
 			zipList = getAllFileList(destdir, '.gz','.tar.gz')
 			# print (zipList)
