@@ -104,6 +104,7 @@ class CompositeResultHandler(ResultHandler):
 
 						print('Result')
 					super().printFile(item['result'])
+					print('\n\n')
 
 				elif item['outputType'] == 'TEXT':
 					print('ID : ', item['id'])
@@ -117,6 +118,7 @@ class CompositeResultHandler(ResultHandler):
 
 					print('Result')
 					print(item['result'])
+					print('\n\n')
 		print('\n\n')
 
 		return super().show(res)
