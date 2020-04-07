@@ -1,50 +1,43 @@
 {
-    "OneShutRule" : [
-        {
-            "id" : "ssl",
-            "filter" : ["sdx.logging SDX", "message send failed: 35"],
-            "result" : "SSL Problem refer to https://hlm.lge.com/jirs-1234",
-            "outputType" : "TEXT"
-        },
-        {
-            "id" : "chinaCP",
-            "filter" : ["sdx.logging SDX", "countrycode2: CN"],
-            "result" : "testdata/res_1.txt",
-            "outputType" : "FILE"
-        },
-        {
-            "id" : "Production",
-            "filter" : ["sdx.logging SDX", "init_server_data index: 0"],
-            "result" : "production server",
-            "outputType" : "TEXT"
-        },
-        {
-            "id" : "Publish",
-            "filter" : ["sdx.logging SDX", "init_server_data isPublished: 1"],
-            "result" : "publish mode",
-            "outputType" : "TEXT"
-        },
-        {
-            "id" : "App_publish",
-            "filter" : ["sdx.logging SDX", "init_server_data isAppPublished: 1"],
-            "result" : "App publish mode",
-            "outputType" : "TEXT"
-        }
-    ],
-    "CompositeRule" : [
-        {
-            "id" : "production_publish_publish",
-            "condition" : "Production and Publish and App_publish",
-            "result" : "testdata/res_2.txt",
-            "ruleType" : "BOOLEANEXPR",
-            "outputType" : "FILE"
-        },
-        {
-            "id" : "sequencial_type",
-            "condition" : "",
-            "result" : "testdata/res_2.txt",
-            "ruleType" : "SEQUENCIAL",
-            "outputType" : "TEXT"
-        }
-    ]
+	"OneShutRule": [{
+			"id": "id_string_1",
+			"filter": ["regular expression for filtering"],
+			"result": "Your program is normally run",
+			"outputType": "TEXT",
+			"logType": "NORMAL"
+		},
+		{
+			"id": "id_string_2",
+			"filter": ["regular", "expression", "for", "filtering"],
+			"result": "path/for/file/descriptino.txt",
+			"outputType": "FILE",
+			"logType": "FAULT"
+		},
+		{
+			"id": "id_string_3",
+			"filter": ["input", "your", "data", "to", "check", "a line"],
+			"result": "You can find a fault in the log line",
+			"outputType": "TEXT",
+			"logType": "FAULT"
+		}
+	],
+	"CompositeRule": [
+		{
+			"id": "boolean_expression_rule",
+			"condition": "id_string_1 and id_string_2 and not id_string_3",
+			"result": "testdata/result.txt",
+			"ruleType": "BOOLEANEXPR",
+			"outputType": "FILE",
+			"logType": "FAULT"
+		},
+		{
+			"id": "sequential_rule",
+			"order": ["id_string_1", "id_string_2"],
+			"result": "This is NOT a bug",
+			"ruleType": "SEQUENTIAL",
+			"outputType": "TEXT",
+			"logType": "NORMAL"
+		}
+	]
 }
+

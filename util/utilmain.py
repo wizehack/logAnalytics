@@ -5,11 +5,11 @@ from httpdwnldr import HttpDwnldr
 from tar import Tar
 
 def printGuide():
-	print ('python3 utilmain.py -u <download url> -s <download directory path> -t <conf file template>')
+	print ('python3 util/utilmain.py -u <download url> -s <download directory path> -t <conf file template>')
 	print('or')
-	print ('python3 utilmain.py -c <compressed file path> -d <destination directory path> -t <conf file template>')
+	print ('python3 util/utilmain.py -c <compressed file path> -d <destination directory path> -t <conf file template>')
 	print('or')
-	print ('python3 utilmain.py -d <destination directory path> -t <conf file template>')
+	print ('python3 util/utilmain.py -d <destination directory path> -t <conf file template>')
 
 
 def uncompress(srcfile, destpath):
@@ -100,9 +100,7 @@ if __name__ == "__main__":
 			template = arg
 
 	if template is None:
-		print('Error: Can not find template file')
-		printGuide()
-		sys.exit(-1)
+		template = "res/logconftemplate.json"
 
 
 	if compressedfile is not None:
