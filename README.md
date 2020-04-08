@@ -3,8 +3,10 @@
 # logAnalytics 개념
 logAnalytics는 사용자가 미리 설정한 위치의 로그파일(log conf파일)을 읽고, 사용자가 사전에 정의한 분석 규칙(main conf파일)으로 로그를 분석하는 프로그램이다.
 logAnalytics는 아래 두 가지 명령어를 제공한다.
+<pre>
 1) python3 util/utilmain.py
 2) python3 src/main.py
+</pre>
 
 - utilmain.py: 분석할 로그의 다운로드, 압축해제, 및 분석할 로그의 경로를 설정한 파일(log conf파일) 생성기능 제공
 - main.py: log conf파일에서 지정한 경로의 로그들을, main conf에서 지정한 규칙에 의해서 분석하는 기능 제공
@@ -14,20 +16,25 @@ logAnalytics는 아래 두 가지 명령어를 제공한다.
 사용 방법은 아래 명령어를 통해서 확인할 수 있다.
 python3 util/utilmain.py -h
 
-
 -u: 로그 다운로드 url, 예) http://www.log.com/mylog.tar.gz
 -t: conf file template 경로, 예) res/logconftemplate.json
 -c: 압축된 로그파일 경로(tar.gz 또는 tgz 파일만 지원), 예) /tmp/log.tar.gz
 -d: 압축이 해제된 로그 디렉토리 경로, 예) /tmp/log
 
 -u 옵션은 -d, -t 옵션과 함께 사용한다.
+```
 예) python3 utilmain.py -u <download url> -s <download directory path> -t <conf file template>
+```
 
 -c 옵션는 -d, -t 옵션과 함께 사용한다.
+```
 예) python3 utilmain.py -c <compressed file path> -d <destination directory path> -t <conf file template>
+```
 
 -d 옵션은 -t 옵션과 함께 사용한다.
+```
 예) python3 utilmain.py -d <destination directory path> -t <conf file template>
+```
 
 conf file template은 압축이 히제된 로그 디렉토리에서, 확인해야할 로그 파일 리스트가 저장된 파일이다.
 신규로 분석이 필요한 파일이 있는 경우, conf file template에 분석할 로그파일의 경로를 추가 및 수정할 수 있다.
@@ -35,55 +42,76 @@ conf file template은 압축이 히제된 로그 디렉토리에서, 확인해�
 
 # main.py
 사용 방법은 아래 명령어를 통해서 확인할 수 있다.
+```
 python3 util/utilmain.py -h
+```
 
+```
 -l: log conf 파일의 위치를 넣는다. log conf 파일은 utilmain.py를 실행시키면 생성된다. 예) logs/logconf.json
 -c: main conf 파일의 위치를 넣는다. main conf 파일은 사용자가 작성한 파일이다. 예) res/mainconf.json
+```
 
 log conf파일경로가 logs/logconf.json이고, main conf 파일의 경로가 res/mainconf.json 이면 아래와 같이 프로그램을 실행할 수 있다.
+```
 python3 src/main.py -l logs/logconf.json -c res/mainconf.json
-
+```
 
 # 사용 예제
 ## 로그 파일을 다운로드 받아야 하는 경우
 
 1. 다운로드 디렉토리 생성
+```
 $ mkdir ./logs
+```
 
 3. 로그파일 다운로드 및 압축해제
+```
 $ python3 util/utilmain.py -u http://db.log.com/logs/mylog.tgz -s logs -t res/logconftemplate.json
+```
 
 4. 위에서 생성된 logconf.json (분석할 로그 경로)파일과 mainconf.json(분석 규칙)파일을 사용하여 로그 분석
+```
 $ python3 src/main.py -l logs/logconf.json -c res/mainconf.json
+```
 
 
 ## 로그파일이 압축된 상태로 존재하는 경우
 
 1. 압축된 로그파일(mylog.tgz)을 압축 해제(logs/)
+```
 $ python3 util/utilmain.py -c logs/mylog.tgz -d logs -t res/logconftemplate.json
 ....
 logs/logconf.json  is generated
+```
 
 2. 위에서 생성된 logconf.json (분석할 로그 경로)파일과 mainconf.json(분석 규칙)파일을 사용하여 로그 분석
+```
 $ python3 src/main.py -l logs/logconf.json -c res/mainconf.json
+```
 
 
 ## 압축해제 된 로그파일이 있는 경우
 1. logconf.json 파일만 생성
+```
 $ python3 util/utilmain.py -d logs -t res/logconftemplate.json
 ...
 logs/logconf.json  is generated
+```
 
 
 2. 위에서 생성된 logconf.json (분석할 로그 경로)파일과 mainconf.json(분석 규칙)파일을 사용하여 로그 분석
+```
 $ python3 src/main.py -l logs/logconf.json -c res/mainconf.json
+```
 
 
 ## 분석 결과 예제
+```
 ==== matched log by composite Rule ====
 ......
 Result
 문제 아님, 정상 동작
+```
 
 
 ## 출력 데이터 확인 방법
