@@ -90,22 +90,32 @@ Result
 res/logconftemplate.json 파일을 열어보면 다음과 같이
 분석해야하는 로그파일 경로가 들어있다.
 
+<pre>
+<code>
 {
     "path" : [
         "log/file/path.txt"
     ]
 }
+</pre>
+</code>
+
 
 "path"의 value로 되어있는 json array는 분석해야할 로그파일의 경로를 나타낸다.
 이 경로는 추후에, 실제 log conf 파일을 생성할 때 사용된다.
 위와 같이 "log/file/path.txt" 하나의 path가 기록된 res/logconftemplate.json 파일로는 
 아래와 같은 logconf.json 파일이 생성된다.
 
+<pre>
+<code>
 {
     "targets": [
         "downloadedDir/log/file/path.txt"
     ]
 }
+</pre>
+</code>
+
 로그를 다운로드 받은 위치가 downloadedDir 이고 res/logconftemplate.json 파일에 path가 log/file/path.txt로 되어있으면
 downloadedDir/log/file/path.txt 로 경로가 결정된다.
 실제 로그를 분석할 때, python3 src/main.py 프로그램에서 logconf.json에 기록된 파일 리스트를 읽고 로그를 분석하게 된다.
@@ -117,7 +127,9 @@ downloadedDir/log/file/path.txt 로 경로가 결정된다.
 
 # 로그 분석 규칙 (mainconf.json) 작성 방법
 res/mainconf.json 아래와 같은 로그 분석 규칙 정보가 작성되어 있다.
- 
+<pre>
+<code>
+{
 {
 	"OneShutRule": [{
 			"id": "id_string_1",
@@ -160,6 +172,9 @@ res/mainconf.json 아래와 같은 로그 분석 규칙 정보가 작성되어 �
 		}
 	]
 }
+</pre>
+</code>
+
 
 1) OneShutRule
   - OneShutRule의 배열에 포함되는 각 json 객체들은 각각의 로그 라인에 대한 분석 규칙을 정의함
