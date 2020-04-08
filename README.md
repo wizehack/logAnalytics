@@ -86,6 +86,24 @@ Result
 문제 아님, 정상 동작
 
 
+## 출력 데이터 확인 방법
+==== matched log by Oneshut Rule ====
+- mainconf.json의 OneshutRule로 정의한 규칙에 의해서 필터링된 로그 정보가 출력됨
+
+==== matched log by composite Rule ====
+- mainconf.json의 CompositeRule로 정의한 규칙에 의해서 필터링된 로그 정보가 출력됨
+
+==== Faulty Logs ====
+- mainconf.json의 OneshutRule 에서 필터링된 로그 중 logType을 FAULT로 정의한 로그가 출력됨 
+
+==== Composite faulty Logs  ====
+- mainconf.json의 CompositeRule에 의해서 필터링된 로그 중 logType을 FAULT로 정의한 로그가 출력됨 
+
+==== Detected abnomal states ====
+- mainconf.json으로 확인되지 않은 규칙들 중, logType이 NORMAL인 필터링 규칙들을 출력함
+- 로그가 남아있을 것으로 예상하고 있지만, 실제로는 찾지 못한 로그들에 대해서 보여줌
+
+
 # conf file template(res/logconftemplate.json) 작성 방법
 res/logconftemplate.json 파일을 열어보면 다음과 같이
 분석해야하는 로그파일 경로가 들어있다.
