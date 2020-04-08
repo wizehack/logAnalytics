@@ -130,7 +130,6 @@ res/mainconf.json 아래와 같은 로그 분석 규칙 정보가 작성되어 �
 <pre>
 <code>
 {
-{
 	"OneShutRule": [{
 			"id": "id_string_1",
 			"filter": ["regular expression for filtering"],
