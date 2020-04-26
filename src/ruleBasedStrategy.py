@@ -54,7 +54,14 @@ class RuleBasedStrategy(AnalysisStrategy):
 
 	def checkByOneshutRule(self, line):
 		# print('========= line: ', line)
+		if self._confLoader is None:
+			return None
+
 		rules = self._confLoader.getOneShutRule();
+
+		if rules is None:
+			return None
+
 		for n in range(len(rules)):
 			filters = rules[n]['filter']
 
@@ -85,7 +92,15 @@ class RuleBasedStrategy(AnalysisStrategy):
 
 	def checkByCompositeRule(self, oneshutRes):
 		self._matchedLogList = []
+
+		if self._confLoader is None:
+			return None
+
 		rules = self._confLoader.getCompositeRule();
+
+		if rules is None:
+			return None
+
 		compositeRes = []
 
 		for rule in rules:

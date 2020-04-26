@@ -5,6 +5,8 @@ class ConfLoader:
 
 	def __init__(self, c):
 		self._conf = c
+		self._mainConfJson = None
+		self._logConfJson = None
 
 		mainconfschemaPath = './res/mainconfschema.json'
 		logconfschemaPath = './res/logconfschema.json'
@@ -47,15 +49,23 @@ class ConfLoader:
 
 	def getTargetPathList(self):
 		print(" getTargetPathList:", self._logConfJson)
-		return self._logConfJson['targets']
+		if self._logConfJson:
+			return self._logConfJson['targets']
+		return None
 
 
 	def getOneShutRule(self):
-		return self._mainConfJson['OneShutRule']
+
+		if self._mainConfJson:
+			return self._mainConfJson['OneShutRule']
+		return None
 
 
 	def getCompositeRule(self):
-		return self._mainConfJson['CompositeRule']
+
+		if self._mainConfJson:
+			return self._mainConfJson['CompositeRule']
+		return None
 
 '''
 	def getDisplayLogType(self):
